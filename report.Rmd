@@ -120,9 +120,9 @@ figures. Until you've completed all the parts, you may safely leave these
 captions blank.
 
 ```{r code block to create descriptive captions}
-caption_4 <- 'Descriptive Caption for part 4 here'
-caption_5 <- 'Descriptive Caption for part 5 here'
-caption_8 <- 'Descriptive Caption for part 8 here'
+caption_4 <- 'Principal-component variance contributions with cumulative variance line for the CRC microarray cohort.'
+caption_5 <- 'PC1 vs PC2 biplot showing SixSubtypesClassification groupings from the Marisa et al. dataset.'
+caption_8 <- 'Heatmap of FDR < 1% probe intensities scaled per gene using the RdBu color-blind friendly palette.'
 ```
 
 ## 4. Plot the variance explained and cumulative variance for the PCs
@@ -141,7 +141,27 @@ numeric ordering.
 
 ```{r code block to plot variance explained and cumulative variance explained, fig.cap = caption_4}
 #Create a ggplot2 with the plot described above, refer to the reference report
+variance_plot <- ggplot(variance_tibble, aes(x = principal_components)) +
+    geom_col(aes(y = variance_explained), fill = "#1f78b4", width = 0.7, alpha = 0.85) +
+    geom_line(aes(y = cumulative, group = 1), color = "#b22222", size = 0.8) +
+    geom_point(aes(y = cumulative), color = "#b22222", size = 2) +
+    scale_y_continuous(
+        limits = c(0, 1),
+        labels = scales::percent_format(accuracy = 1),
+        name = "Variance Explained"
+    ) +
+    labs(
+        x = "Principal Component",
+        title = "Variance Explained Per Principal Component",
+        subtitle = "Bars show individual PCs; line traces cumulative variance"
+    ) +
+    theme_minimal() +
+    theme(
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(face = "bold")
+    )
 
+variance_plot
 ```
 
 
