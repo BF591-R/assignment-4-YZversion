@@ -74,3 +74,4 @@ describe("return_de_intensity()", {
     expect_true(identical(function_mat, test_mat))
   })
 })
+
